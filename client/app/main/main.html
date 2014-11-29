@@ -1,7 +1,7 @@
 
 <header ng-hide="isLoggedIn()" class="hero-unit" id="banner">
   <div class="container">
-    <h1>Twitter Chat Application</h1>
+    <h1 class="title">Twitter Chat Application</h1>
     <p class="lead">Sign in with your twitter account to get started</p>
     <div>
       <a class="btn btn-twitter" href="" ng-click="loginOauth('twitter')">
@@ -35,14 +35,14 @@
          <div class="col-xs-12">
             <div class="panel panel-primary">
                 <div class="panel-heading" id="accordion">
-                    <span class="glyphicon glyphicon-comment"></span> Chat
+                    <span class="glyphicon glyphicon-comment"></span> Main Room
                     <div class="btn-group pull-right">
-                        <a type="button" class="btn btn-default btn-xs" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                        <a type="button" class="btn btn-default btn-xs" ng-click="isCollapsed = !isCollapsed">
                             <span class="glyphicon glyphicon-chevron-down"></span>
                         </a>
                     </div>
                 </div>
-            <div class="panel-collapse collapse" id="collapseOne">
+            <div class="panel-collapse collapse" collapse="isCollapsed">
                 <div class="panel-body">
                     <ul class="chat">
                         <li class="left clearfix"><span class="chat-img pull-left">
@@ -107,7 +107,7 @@
                     <div class="input-group">
                         <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..." />
                         <span class="input-group-btn">
-                            <button class="btn btn-warning btn-sm" id="btn-chat">
+                            <button class="btn btn-success btn-sm" id="btn-chat">
                                 Send</button>
                         </span>
                     </div>
