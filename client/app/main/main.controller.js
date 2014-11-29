@@ -3,7 +3,8 @@
 angular.module('chatAppApp')
 .controller('MainCtrl', function (Auth,$scope, $http, socket, $window) {
   $scope.awesomeThings = [];
-
+  $scope.isCollapsed= false;
+  
   $http.get('/api/things').success(function(awesomeThings) {
     $scope.awesomeThings = awesomeThings;
     socket.syncUpdates('thing', $scope.awesomeThings);
