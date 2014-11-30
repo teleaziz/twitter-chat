@@ -1,10 +1,13 @@
 'use strict';
 
 angular.module('chatAppApp')
-.controller('MainCtrl', function (Auth,$scope, $http, socket, $window) {
+.controller('MainCtrl', function (Auth,$scope, $http, $state, socket, $window) {
   $scope.awesomeThings = [];
   $scope.isCollapsed= false;
   
+//  if(Auth.isLoggedIn()){
+//    $state.go('rooms');
+//  }
   $http.get('/api/things').success(function(awesomeThings) {
     $scope.awesomeThings = awesomeThings;
     socket.syncUpdates('thing', $scope.awesomeThings);

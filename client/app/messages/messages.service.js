@@ -1,21 +1,26 @@
 'use strict';
 
 angular.module('chatAppApp')
-.factory('messages', function (socket, $http) {
+.factory('messages', function (socket, $http, Auth) {
   // Service logic
   // ...
-
-  var getPublicMessages= function(){
-    return $http.get('/api/messages');
+  var _id = Auth.getCurrentUser()._id;
+  var getPublicM= function(){
+    return $http.get('/api/users/'+_id+'/messages?main=true');
   };
-  
-  var sendMessag= function(txt) {
-      return $http.post('/api/messages', { body: txt });
+
+  var getPrivate= function(){
+    return $http.get('/api/users/'+_id+'/messages?me=true');
+  };
+
+  var send= function(txt) {
+    return $http.post('/api/users/'+Auth.getCurrentUser()._id+'/messages', { body: txt });
   }
 
   // Public API here
   return {
-    send: sendMessage ,
-    getPublic: getPublicMessages
+    send: send,
+    getPublic: getPublicM,
+    getPrivate: getPrivate
   };
 });

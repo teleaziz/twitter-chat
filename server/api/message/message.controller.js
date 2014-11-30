@@ -5,10 +5,18 @@ var Message = require('./message.model');
 
 // Get list of messages
 exports.index = function(req, res) {
-  Message.find(function (err, messages) {
-    if(err) { return handleError(res, err); }
-    return res.json(200, messages);
-  });
+  if(req.query.main){
+    Message.find(function (err, messages) {
+      if(err) { return handleError(res, err); }
+      return res.json(200, messages);
+    });
+  } else if(req.query.me){
+    Message.find({to: req.primaryParams.userid})
+    .exec(function(err,messages){
+      if(err) { return handleError(res, err); }
+      return res.json(200, messages);
+    })
+  }
 };
 
 // Get a single message
@@ -22,6 +30,12 @@ exports.show = function(req, res) {
 
 // Creates a new message in the DB.
 exports.create = function(req, res) {
+  req.body.from = {
+    name: req.user.name,
+    img: req.user.twitter.profile_image_url,
+    handle: req.user.twitter.screen_name,
+    id: req.user._id
+  }
   Message.create(req.body, function(err, message) {
     if(err) { return handleError(res, err); }
     return res.json(201, message);
