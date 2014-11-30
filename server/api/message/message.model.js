@@ -11,8 +11,16 @@ var MessageSchema = new Schema({
     type: String,
     default: 'main'
   },
-  from: {}
-  
+  from: {},
+  created: {
+    type: Date,
+    default: new Date().toUTCString()
+  }
+
+});
+MessageSchema.pre('save', function (next) {
+  this.created = new Date().toUTCString();
+  next();
 });
 
 module.exports = mongoose.model('Message', MessageSchema);

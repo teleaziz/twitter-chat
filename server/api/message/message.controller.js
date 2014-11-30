@@ -6,12 +6,18 @@ var Message = require('./message.model');
 // Get list of messages
 exports.index = function(req, res) {
   if(req.query.main){
-    Message.find(function (err, messages) {
+    Message.find({to:'main'}).exec(function (err, messages) {
       if(err) { return handleError(res, err); }
       return res.json(200, messages);
     });
   } else if(req.query.me){
-    Message.find({to: req.primaryParams.userid})
+    Message.find(
+      {
+        $or: [
+          { to: req.user.twitter.screen_name },
+          { 'from.handle': req.user.twitter.screen_name} 
+        ]
+      })
     .exec(function(err,messages){
       if(err) { return handleError(res, err); }
       return res.json(200, messages);
