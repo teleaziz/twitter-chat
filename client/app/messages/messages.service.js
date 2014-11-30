@@ -16,11 +16,15 @@ angular.module('chatAppApp')
   var send= function(txt) {
     return $http.post('/api/users/'+Auth.getCurrentUser()._id+'/messages', { body: txt });
   }
+  var sendTo = function(user , txt){
+    return $http.post('/api/users/'+Auth.getCurrentUser()._id+'/messages', { to: user.handle, body: txt });
+  }
 
   // Public API here
   return {
     send: send,
     getPublic: getPublicM,
-    getPrivate: getPrivate
+    getPrivate: getPrivate,
+    sendTo: sendTo
   };
 });

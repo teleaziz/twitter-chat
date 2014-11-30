@@ -11,10 +11,12 @@
           </div>
         </div>
         <div class="panel-collapse collapse" collapse="isCollapsed">
-          <div class="panel-body">
-            <ul class="chat">
-              <li ng-repeat="message in mainRoom" class="left clearfix"><span class="chat-img pull-left">
+          <div class="panel-body" scroll-if>
+            <ul class="chat" >
+              <li ng-repeat="message in mainRoom | filter:{ to: 'main' }" scroll-item class="left clearfix"><span class="chat-img pull-left">
+               <a href="#" ng-click="initiatePrivateChat(message.from)">
                 <img ng-src="{{message.from.img}}" alt="User Avatar" class="img-circle" />
+                </a>
                 </span>
                 <div class="chat-body clearfix">
                   <div class="header">
@@ -47,84 +49,44 @@
 
   <div ng-repeat="room in privateRooms" class="row private-chat">
     <div class="col-xs-12">
-      <div class="panel panel-primary">
+         <div class="panel panel-primary">
         <div class="panel-heading" id="accordion">
-          <span class="glyphicon glyphicon-comment"></span> Privat Chat
+          <span class="glyphicon glyphicon-comment"></span> Private chat with {{"@"+room.with.handle}}
           <div class="btn-group pull-right">
-            <a type="button" class="btn btn-default btn-xs" ng-click="ispCollapsed = !ispCollapsed">
+            <a type="button" class="btn btn-default btn-xs" ng-click="isCollapsed = !isCollapsed">
               <span class="glyphicon glyphicon-chevron-down"></span>
             </a>
           </div>
         </div>
-        <div class="panel-collapse collapse" collapse="ispCollapsed">
-          <div class="panel-body">
-            <ul class="chat">
-              <li class="left clearfix"><span class="chat-img pull-left">
-                <img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" />
+        <div class="panel-collapse collapse" collapse="isCollapsed">
+          <div class="panel-body" scroll-if>
+            <ul class="chat" >
+              <li ng-repeat="message in mainRoom| matchRoom:room.with" scroll-item class="left clearfix"><span class="chat-img pull-left">
+               <a href="#" ng-click="initiatePrivateChat(message.from)">
+                <img ng-src="{{message.from.img}}" alt="User Avatar" class="img-circle" />
+                </a>
                 </span>
                 <div class="chat-body clearfix">
                   <div class="header">
-                    <strong class="primary-font">Jack Sparrow</strong> <small class="pull-right text-muted">
-                    <span class="glyphicon glyphicon-time"></span>12 mins ago</small>
+                    <strong class="primary-font">{{message.from.name}}({{"@"+message.from.handle}})</strong> <small class="pull-right text-muted">
+                    <span class="glyphicon glyphicon-time"></span>{{message.created| date:"MM/dd/yyyy 'at' h:mma"}}</small>
                   </div>
                   <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
-                    dolor, quis ullamcorper ligula sodales.
-                  </p>
-                </div>
-              </li>
-              <li class="right clearfix"><span class="chat-img pull-right">
-                <img src="http://placehold.it/50/FA6F57/fff&text=ME" alt="User Avatar" class="img-circle" />
-                </span>
-                <div class="chat-body clearfix">
-                  <div class="header">
-                    <small class=" text-muted"><span class="glyphicon glyphicon-time"></span>13 mins ago</small>
-                    <strong class="pull-right primary-font">Bhaumik Patel</strong>
-                  </div>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
-                    dolor, quis ullamcorper ligula sodales.
-                  </p>
-                </div>
-              </li>
-              <li class="left clearfix"><span class="chat-img pull-left">
-                <img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" />
-                </span>
-                <div class="chat-body clearfix">
-                  <div class="header">
-                    <strong class="primary-font">Jack Sparrow</strong> <small class="pull-right text-muted">
-                    <span class="glyphicon glyphicon-time"></span>14 mins ago</small>
-                  </div>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
-                    dolor, quis ullamcorper ligula sodales.
-                  </p>
-                </div>
-              </li>
-              <li class="right clearfix"><span class="chat-img pull-right">
-                <img src="http://placehold.it/50/FA6F57/fff&text=ME" alt="User Avatar" class="img-circle" />
-                </span>
-                <div class="chat-body clearfix">
-                  <div class="header">
-                    <small class=" text-muted"><span class="glyphicon glyphicon-time"></span>15 mins ago</small>
-                    <strong class="pull-right primary-font">Bhaumik Patel</strong>
-                  </div>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
-                    dolor, quis ullamcorper ligula sodales.
+                    {{message.body}}
                   </p>
                 </div>
               </li>
             </ul>
           </div>
-          <div class="panel-footer">
-            <div class="input-group">
-              <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..." />
-              <span class="input-group-btn">
-                <button class="btn btn-success btn-sm" id="btn-chat">
-                  Send</button>
-              </span>
-            </div>
+          <div class="panel-footer chat-footer">
+            <form class="thing-form">
+              <p class="input-group">
+                <input type="text" class="form-control" placeholder="Type your message here..." ng-model="privateMessage[room.with.handle]">
+                <span class="input-group-btn">
+                  <button type="submit" class="btn btn-success" ng-click="sendTo(room.with)">Send</button>
+                </span>
+              </p>
+            </form>
           </div>
         </div>
       </div>

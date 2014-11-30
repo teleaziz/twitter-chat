@@ -51,4 +51,42 @@ angular.module('chatAppApp', [
         }
       });
     });
-  });
+  })
+.directive('scrollItem',function(){
+    return{
+    restrict: "A",
+    link: function(scope, element, attributes) {
+        if (scope.$last){ // If this is the last item, trigger an event
+           scope.$emit("Finished");
+       }
+    }
+   }
+})
+.directive('scrollIf', function() {
+return{
+    restrict: "A",
+    link: function(scope, element, attributes) {
+        scope.$on("Finished",function(){ //Handle an event when all the items are rendered with ng-repeat
+            var chat_height = element.outerHeight();
+            console.log(chat_height);
+            element.scrollTop(chat_height*20); 
+        });
+    }
+   }
+  })
+.filter('matchRoom', function(Auth) {
+  var me = Auth.getCurrentUser();
+    return function(items , user) {
+      var filtered = [];
+      angular.forEach(items, function(item) {
+        if(item.to == me.twitter.screen_name && item.from.handle == user.handle ) {
+          filtered.push(item);
+           }
+         else if(item.to == user.handle && item.from.handle == me.twitter.screen_name) {
+           filtered.push(item);
+        }
+      });
+      return filtered;
+    };
+
+});
