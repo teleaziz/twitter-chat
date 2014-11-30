@@ -14,10 +14,10 @@ angular.module('chatAppApp')
   };
 
   var send= function(txt) {
-    return $http.post('/api/users/'+Auth.getCurrentUser()._id+'/messages', { body: txt });
+    return $http.post('/api/users/'+_id+'/messages', { body: txt });
   }
   var sendTo = function(user , txt){
-    return $http.post('/api/users/'+Auth.getCurrentUser()._id+'/messages', { to: user.handle, body: txt });
+    return $http.post('/api/users/'+_id+'/messages', { to: user.handle, body: txt });
   }
 
   // Public API here

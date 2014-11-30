@@ -7,17 +7,15 @@ angular.module('chatAppApp')
   $scope.mainRoom=[];
   $scope.privateRooms={};
   $scope.privateMessage={};
+  $scope.me = Auth.getCurrentUser();
 
 
   messages.getPublic().success(function(response){
     $scope.mainRoom= response;
-    console.log("here");
-    console.log("response main: ", response);
-    socket.syncUpdates('message', $scope.mainRoom);
+    socket.syncUpdates('message', $scope.mainRoom , 'main');
   }).error(function(err){
     console.log("reerer", err);
   })
-
 
   function isMe(user){
     return Auth.getCurrentUser().twitter.screen_name == user.handle ;
@@ -34,11 +32,19 @@ angular.module('chatAppApp')
     })
   }
   $scope.isMe = isMe ;
-  $scope.me = Auth.getCurrentUser();
   $scope.initiatePrivateChat = function(user){
     if (isMe(user)) {return ;}
     if( $scope.privateRooms[user.handle]) {return ;}
-    $scope.privateRooms[user.handle]= {with: user};
+
+    messages.getPrivate().success(function(response){
+      $scope.privateMessages= response;
+      $scope.privateRooms[user.handle]= {with: user};
+      socket.syncUpdatesWith('message', $scope.privateMessages , [$scope.me.twitter.screen_name, user.handle]);
+    }).error(function(err){
+      console.log("error in fetching private messages", err);
+    })
+
+
   }
 
   $scope.sendTo = function(user){
@@ -50,6 +56,9 @@ angular.module('chatAppApp')
       $scope.privateMessage[user.handle]="";
     })
   }
+  $scope.$on('$destroy', function () {
+    socket.unsyncUpdates('message');
+  });
 
-  
+
 });

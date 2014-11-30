@@ -16,7 +16,13 @@ exports.register = function(socket) {
 }
 
 function onSave(socket, doc, cb) {
-  socket.emit('message:save', doc);
+  if(doc.to==='main'){
+    socket.emit('message:save:main', doc);
+  }
+  else {
+    var handles = [ doc.to , doc.from.handle];
+    socket.emit('message:save'+':'+handles.sort()[0]+':'+handles.sort()[1], doc);
+  }
 }
 
 function onRemove(socket, doc, cb) {

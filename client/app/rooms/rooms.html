@@ -1,5 +1,10 @@
-<div class="col-md-12">
-   <div class="row main-chat">
+<div class="col-xs-3">
+  <ul ng-repeat="user in users">
+    <li>{{user.twitter.screen_name}}</li>
+  </ul>
+</div>
+<div class="col-xs-9">
+  <div class="row main-chat">
     <div class="col-xs-12">
       <div class="panel panel-primary">
         <div class="panel-heading" id="accordion">
@@ -14,8 +19,8 @@
           <div class="panel-body" scroll-if>
             <ul class="chat" >
               <li ng-repeat="message in mainRoom | filter:{ to: 'main' }" scroll-item class="left clearfix"><span class="chat-img pull-left">
-               <a href="#" ng-click="initiatePrivateChat(message.from)">
-                <img ng-src="{{message.from.img}}" alt="User Avatar" class="img-circle" />
+                <a href="#" ng-click="initiatePrivateChat(message.from)">
+                  <img ng-src="{{message.from.img}}" alt="User Avatar" class="img-circle" />
                 </a>
                 </span>
                 <div class="chat-body clearfix">
@@ -49,7 +54,7 @@
 
   <div ng-repeat="room in privateRooms" class="row private-chat">
     <div class="col-xs-12">
-         <div class="panel panel-primary">
+      <div class="panel panel-primary">
         <div class="panel-heading" id="accordion">
           <span class="glyphicon glyphicon-comment"></span> Private chat with {{"@"+room.with.handle}}
           <div class="btn-group pull-right">
@@ -61,9 +66,9 @@
         <div class="panel-collapse collapse" collapse="isCollapsed">
           <div class="panel-body" scroll-if>
             <ul class="chat" >
-              <li ng-repeat="message in mainRoom| matchRoom:room.with" scroll-item class="left clearfix"><span class="chat-img pull-left">
-               <a href="#" ng-click="initiatePrivateChat(message.from)">
-                <img ng-src="{{message.from.img}}" alt="User Avatar" class="img-circle" />
+              <li ng-repeat="message in privateMessages| matchRoom:room.with" scroll-item class="left clearfix"><span class="chat-img pull-left">
+                <a href="#" ng-click="initiatePrivateChat(message.from)">
+                  <img ng-src="{{message.from.img}}" alt="User Avatar" class="img-circle" />
                 </a>
                 </span>
                 <div class="chat-body clearfix">
