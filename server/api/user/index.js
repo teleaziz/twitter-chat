@@ -14,7 +14,7 @@ var passPrimaryParams = function(req, res, next) {
 router.use('/:userid/messages', passPrimaryParams);
 router.use('/:userid/messages', auth.isAuthenticated());
 router.use('/:userid/messages', require('../message'));
-router.get('/', auth.hasRole('admin'), controller.index);
+router.get('/', auth.isAuthenticated(), controller.index);
 router.delete('/:id', auth.hasRole('admin'), controller.destroy);
 router.get('/me', auth.isAuthenticated(), controller.me);
 router.put('/:id/password', auth.isAuthenticated(), controller.changePassword);

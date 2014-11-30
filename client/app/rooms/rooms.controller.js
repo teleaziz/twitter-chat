@@ -1,15 +1,15 @@
 'use strict';
 
 angular.module('chatAppApp')
-.controller('RoomsCtrl', function ($scope, Auth, socket,messages) {
+.controller('RoomsCtrl', function ($scope, Auth, socket,messages, User) {
 
   $scope.message = 'Hello';
   $scope.mainRoom=[];
   $scope.privateRooms={};
   $scope.privateMessage={};
   $scope.me = Auth.getCurrentUser();
-
-
+  $scope.users=User.query();
+  console.log($scope.users);
   messages.getPublic().success(function(response){
     $scope.mainRoom= response;
     socket.syncUpdates('message', $scope.mainRoom , 'main');
