@@ -1,13 +1,13 @@
 'use strict';
 
 angular.module('chatAppApp')
-.controller('MainCtrl', function (Auth,$scope, $http, $state, socket, $window) {
+.controller('MainCtrl', function (Auth,$scope, $http, $state,User, socket, $window) {
   $scope.awesomeThings = [];
   $scope.isCollapsed= false;
   
-//  if(Auth.isLoggedIn()){
-//    $state.go('rooms');
-//  }
+  if(Auth.getCurrentUser()) {
+  $scope.users= User.query();
+  }
   $http.get('/api/things').success(function(awesomeThings) {
     $scope.awesomeThings = awesomeThings;
     socket.syncUpdates('thing', $scope.awesomeThings);
@@ -33,4 +33,10 @@ angular.module('chatAppApp')
     $window.location.href = '/auth/' + provider;
   };
   $scope.isLoggedIn = Auth.isLoggedIn;
+  $scope.searchTerm = function (item) {
+    return item.name === $scope.query || (item.twitter && item.twitter.screen_name === $scope.query); 
+};
+  
+  $scope.isMe= function(user) {return Auth.getCurrentUser().twitter.screen_name == user.twitter.screen_name ;}
+
 });

@@ -8,5 +8,11 @@ angular.module('chatAppApp')
         templateUrl: 'app/rooms/rooms.html',
         controller: 'RoomsCtrl',
         authenticate: true
+      })
+    .state('private', {
+        url: '/private/:handle',
+        templateUrl: 'app/rooms/rooms.html',
+        controller: 'RoomsCtrl',
+        authenticate: true
       });
   });
