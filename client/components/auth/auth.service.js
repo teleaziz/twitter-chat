@@ -2,7 +2,7 @@
 
 angular.module('chatAppApp')
   .factory('Auth', function Auth($location, $rootScope, $http, User, $cookieStore, $q) {
-    var currentUser = {};
+    var currentUser = false;
     if($cookieStore.get('token')) {
       currentUser = User.get();
     }

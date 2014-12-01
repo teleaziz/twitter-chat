@@ -12,7 +12,33 @@
 </header>
 
 <div class="container">
- 
-  
+ 	
+  <div class="row" ng-show="users" >
+    <div class="input-group custom-search-form">
+      <input type="text" ng-model="query" placeholder="Type your search here..." class="form-control">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="button">
+          <span class="glyphicon glyphicon-search"></span>
+        </button>
+      </span>
+    </div><!-- /input-group -->
+    <hr>
+    
+    <div class="row destacados">
+		<div class="col-md-4" ng-repeat="user in users | filter:query" ng-if="user.twitter">
+    		<div >
+				<img ng-src="{{user.twitter.profile_image_url}}" alt="..." class="img-circle img-thumbnail">
+				<h2>{{user.name}} </h2>
+                 <h4>({{'@' + user.twitter.screen_name}})</h4>
+              <p>{{user.twitter.description}}</p>
+				<a ng-href="/private/{{user.twitter.screen_name}}" class="btn btn-primary" title="Enlace">Chat</a>
+			</div>
+		</div>
+  </div>
+    
+
+
+  </div>
+
 </div>
 
