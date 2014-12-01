@@ -36,5 +36,7 @@ angular.module('chatAppApp')
   $scope.searchTerm = function (item) {
     return item.name === $scope.query || (item.twitter && item.twitter.screen_name === $scope.query); 
 };
+  
+  $scope.isMe= function(user) {return Auth.getCurrentUser().twitter.screen_name == user.twitter.screen_name ;}
 
 });
