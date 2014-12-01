@@ -15,6 +15,7 @@
   <!-- bower:css -->
   <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+  <link rel="stylesheet" href="bower_components/animate.css/animate.css" />
   <!-- endbower -->
   <!-- endbuild -->
   <!-- build:css({.tmp,client}) app/app.css -->
@@ -36,7 +37,7 @@
   <!--Navbar-->
   <div ng-include="'components/navbar/navbar.html'"></div>
   <!-- Add your site or application content here -->
-  <div ui-view="" class="container"></div>
+  <div class="nested-view" ui-view="" class="container"></div>
   <footer class="footer">
   <div class="container">
     <p>Aziz Abbas
@@ -70,6 +71,7 @@ ga('send', 'pageview');
   <script src="bower_components/angular-socket-io/socket.js"></script>
   <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
   <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+  <script src="bower_components/angular-animate/angular-animate.js"></script>
   <!-- endbower -->
   <script src="socket.io-client/socket.io.js"></script>
   <!-- endbuild -->

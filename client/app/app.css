@@ -38,3 +38,24 @@
     padding: 0.2em 0;
 }
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+
+.nested-view.ng-enter {
+  animation: fadeInDown 0.8s;
+  -webkit-animation: fadeInDown 0.8s;
+  -moz-animation: fadeInDown 0.8s;
+  -ms-animation: fadeInDown 0.8s;
+}
+
+.nested-view.ng-enter {  }
+.nested-view.ng-enter-active {  }
+.nested-view.ng-leave {  }
+.nested-view.ng-leave-active {  }
+
+.nested-view.ng-leave {
+  animation: fadeOutDown 0.8s;
+  -webkit-animation: fadeOutDown 0.8s;
+  -moz-animation: fadeOutDown 0.8s;
+  -ms-animation: fadeOutDown 0.8s;
+  opacity: 0.3;
+  }
+
